@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/text_margin"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/home_discover"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="发现"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.15"/>
+
+    <TextView
+        android:id="@+id/home_follow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="关注"
+        android:textSize="16dp"
+        app:layout_constraintStart_toEndOf="@id/home_discover"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.15"/>
+
+    <View
+        android:id="@+id/cursor"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="@color/text_second"
+        android:layout_marginTop="@dimen/near_margin"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintTop_toBottomOf="@id/home_discover"
+        app:layout_constraintStart_toStartOf="@id/home_discover"/>
+
+    <ImageButton
+        android:id="@+id/follow_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@color/background"
+        android:src="@android:drawable/ic_menu_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/home_discover"
+        app:layout_constraintBottom_toBottomOf="@id/home_discover"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cursor"
+        app:layout_constraintStart_toStartOf="parent">
+    </androidx.viewpager.widget.ViewPager>
+
+    <FrameLayout
+        android:id="@+id/home_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cursor"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

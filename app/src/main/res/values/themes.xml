@@ -1,0 +1,48 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Starsapp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+<!--        <item name="colorPrimary">@color/background</item>-->
+<!--        <item name="colorPrimaryVariant">@color/white</item>-->
+<!--        <item name="colorOnPrimary">@color/white</item>-->
+<!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
+<!--        <item name="colorSecondary">@color/teal_200</item>-->
+<!--        <item name="colorSecondaryVariant">@color/teal_700</item>-->
+<!--        <item name="colorOnSecondary">@color/black</item>-->
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/background</item>
+        <!-- Customize your theme here. -->
+        <!--        EditTextStyle-->
+        <item name="android:textViewStyle">@style/textViewStyle</item>
+        <item name="editTextStyle">@style/editTextStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinnerStyle</item>
+    </style>
+<!--    TextView默认样式-->
+    <style name="textViewStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <!--    EditText默认样式-->
+    <style name="editTextStyle" parent="android:Widget.EditText">
+        <!--  hit字体颜色-->
+        <item name="android:textColorHint">@color/text_second</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+    <style name="editTextThemeStyle">
+        <!--选中时下划线的颜色-->
+        <item name="colorControlActivated">@color/text</item>
+        <!--默认时下划线的颜色-->
+        <item name="colorControlNormal">@color/text_second</item>
+    </style>
+
+<!--    Spinner默认样式-->
+    <style name="spinnerStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:background">@color/background</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+<!--    设置主题样式-->
+    <style name="settingsStyle">
+        <item name="android:textSize">20dp</item>
+    </style>
+</resources>

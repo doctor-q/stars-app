@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="cc.doctor.stars_app.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="cc.doctor.stars_app.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/navigation_search_result"
+        android:name="cc.doctor.stars_app.ui.search.result.SearchResultFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search_result" />
+
+    <fragment
+        android:id="@+id/navigation_label_cloud"
+        android:name="cc.doctor.stars_app.ui.labelcloud.LabelCloudFragment"
+        android:label="@string/title_label_cloud"
+        tools:layout="@layout/fragment_label_cloud" />
+
+    <fragment
+        android:id="@+id/navigation_mine"
+        android:name="cc.doctor.stars_app.ui.mine.MineFragment"
+        android:label="@string/title_mine"
+        tools:layout="@layout/fragment_mine" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="cc.doctor.stars_app.ui.settings.SettingsFragment"
+        android:label="@string/title_mine"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/navigation_account_settings"
+        android:name="cc.doctor.stars_app.ui.settings.AccountSettingsFragment"
+        android:label="@string/title_mine"
+        tools:layout="@layout/fragment_account_settings" />
+
+    <fragment
+        android:id="@+id/navigation_feedback"
+        android:name="cc.doctor.stars_app.ui.settings.FeedbackFragment"
+        android:label="@string/title_mine"
+        tools:layout="@layout/fragment_feedback" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="cc.doctor.stars_app.ui.login.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/navigation_register"
+        android:name="cc.doctor.stars_app.ui.login.RegisterFragment"
+        android:label="@string/title_register"
+        tools:layout="@layout/fragment_register" />
+
+    <fragment
+        android:id="@+id/navigation_follow"
+        android:name="cc.doctor.stars_app.ui.follow.FollowFragment"
+        android:label="@string/title_follows"
+        tools:layout="@layout/fragment_mine" />
+</navigation>
