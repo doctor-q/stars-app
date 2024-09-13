@@ -42,10 +42,10 @@
         tools:layout="@layout/fragment_settings" />
 
     <fragment
-        android:id="@+id/navigation_account_settings"
-        android:name="cc.doctor.stars_app.ui.settings.AccountSettingsFragment"
+        android:id="@+id/navigation_settings_user"
+        android:name="cc.doctor.stars_app.ui.settings.SettingsUserFragment"
         android:label="@string/title_mine"
-        tools:layout="@layout/fragment_account_settings" />
+        tools:layout="@layout/fragment_settings_user" />
 
     <fragment
         android:id="@+id/navigation_feedback"

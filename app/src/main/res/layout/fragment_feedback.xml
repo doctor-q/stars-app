@@ -1,36 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/text_margin"
     tools:context=".ui.settings.FeedbackFragment">
 
     <EditText
         android:id="@+id/editTextTextMultiLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:background="@color/text_third"
+        android:gravity="top"
         android:inputType="textMultiLine"
-        app:layout_constraintTop_toTopOf="parent"
+        android:lines="5"
+        android:scrollHorizontally="false"
+        android:theme="@style/editTextThemeStyle"
+        app:layout_constraintBottom_toTopOf="@id/image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/addImage"
-        app:layout_constraintHeight_percent="0.3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/addImage"
-        android:layout_width="wrap_content"
+    <GridView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_add_photo_alternate_24"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextMultiLine"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:horizontalSpacing="8dp"
+        android:numColumns="3"
+        android:verticalSpacing="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextTextMultiLine" />
 
     <Button
+        android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/addImage"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/text_margin"
+        android:text="提交"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="提交"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image" />
 
+    <TextView
+        android:id="@+id/feedback_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="我的反馈"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/submit" />
+
+    <View
+        android:id="@+id/divide1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/text_second"
+        app:layout_constraintTop_toBottomOf="@id/feedback_text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/feedback_his"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="@dimen/near_margin"
+        app:layout_constraintTop_toBottomOf="@id/divide1"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

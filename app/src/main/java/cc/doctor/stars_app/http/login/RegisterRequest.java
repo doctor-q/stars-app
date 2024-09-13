@@ -1,4 +1,4 @@
-package cc.doctor.stars_app.http;
+package cc.doctor.stars_app.http.login;
 
 public class RegisterRequest {
     private String email;

@@ -1,12 +1,15 @@
 package cc.doctor.stars_app.http;
 
+import cc.doctor.stars_app.http.login.EmailRequest;
+import cc.doctor.stars_app.http.login.LoginRequest;
+import cc.doctor.stars_app.http.login.RegisterRequest;
 import cc.doctor.stars_app.ui.login.LoginResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-public interface StarsApi {
+public interface LoginApi {
 
     @GET("ping")
     Call<Response<String>> ping();

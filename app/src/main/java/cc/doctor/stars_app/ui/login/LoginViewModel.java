@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import cc.doctor.stars_app.R;
-import cc.doctor.stars_app.http.LoginRequest;
+import cc.doctor.stars_app.http.login.LoginRequest;
 import cc.doctor.stars_app.http.Response;
 import cc.doctor.stars_app.http.RetrofitFactory;
 import retrofit2.Call;
@@ -26,7 +26,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(String username, String password) {
-        Call<Response<LoginResponse>> call = RetrofitFactory.starsApi.login(new LoginRequest(username, password));
+        Call<Response<LoginResponse>> call = RetrofitFactory.loginApi.login(new LoginRequest(username, password));
         call.enqueue(new RetrofitFactory.ResponseCallback<>(loginResult));
     }
 

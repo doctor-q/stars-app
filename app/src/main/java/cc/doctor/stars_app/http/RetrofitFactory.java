@@ -11,13 +11,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitFactory {
 
-    public static StarsApi starsApi;
+    public static LoginApi loginApi;
+
+    public static UserApi userApi;
 
     static {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.31.155:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        starsApi = retrofit.create(StarsApi.class);
+        loginApi = retrofit.create(LoginApi.class);
+        userApi = retrofit.create(UserApi.class);
     }
 
     public static class ResponseCallback<T> implements Callback<Response<T>> {

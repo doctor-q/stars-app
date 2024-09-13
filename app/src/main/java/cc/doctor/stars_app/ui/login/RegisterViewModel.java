@@ -3,8 +3,8 @@ package cc.doctor.stars_app.ui.login;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import cc.doctor.stars_app.http.EmailRequest;
-import cc.doctor.stars_app.http.RegisterRequest;
+import cc.doctor.stars_app.http.login.EmailRequest;
+import cc.doctor.stars_app.http.login.RegisterRequest;
 import cc.doctor.stars_app.http.Response;
 import cc.doctor.stars_app.http.RetrofitFactory;
 import retrofit2.Call;
@@ -25,7 +25,7 @@ public class RegisterViewModel extends ViewModel {
         request.setRole(role);
         request.setChildGender(gender);
         request.setChildBirth(birth);
-        Call<Response<String>> call = RetrofitFactory.starsApi.register(request);
+        Call<Response<String>> call = RetrofitFactory.loginApi.register(request);
         call.enqueue(new Callback<Response<String>>() {
             @Override
             public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
@@ -50,7 +50,7 @@ public class RegisterViewModel extends ViewModel {
     public void verifyEmail(String email) {
         EmailRequest request = new EmailRequest();
         request.setEmail(email);
-        Call<Response<String>> call = RetrofitFactory.starsApi.emailVerify(request);
+        Call<Response<String>> call = RetrofitFactory.loginApi.emailVerify(request);
         call.enqueue(new Callback<Response<String>>() {
             @Override
             public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
