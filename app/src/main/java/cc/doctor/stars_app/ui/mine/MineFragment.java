@@ -20,8 +20,6 @@ public class MineFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        MineViewModel mineViewModel =
-                new ViewModelProvider(this).get(MineViewModel.class);
 
         binding = FragmentMineBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -29,10 +27,10 @@ public class MineFragment extends Fragment {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         if (!loginState.logged()) {
             // 未登录绑定未登录fragment
-            fragmentTransaction.replace(R.id.mine_fragment_container, new NoLoginMineFragment());
+            fragmentTransaction.replace(R.id.mine_fragment_container, new MineNoLoginFragment());
         } else {
             // 已登录绑定登录fragment
-            fragmentTransaction.replace(R.id.mine_fragment_container, new LoginMineFragment());
+            fragmentTransaction.replace(R.id.mine_fragment_container, new MineLoginFragment());
         }
         fragmentTransaction.commit();
         return root;

@@ -133,7 +133,7 @@ public class FeedbackFragment extends Fragment {
 
     private View createView(ViewGroup parent, Uri uri, Integer resourceId) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.image_item, null);
+        View view = inflater.inflate(R.layout.item_image, null);
         ImageView imageView = view.findViewById(R.id.image);
         if (uri != null) {
             DocumentFile documentFile = DocumentFile.fromSingleUri(getContext(), uri);

@@ -41,7 +41,7 @@ public class SearchResultAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             //因为getView()返回的对象，adapter会自动赋给ListView
-            view = inflater.inflate(R.layout.search_result_item, null);
+            view = inflater.inflate(R.layout.item_resource_card, null);
         } else {
             view = convertView;
         }

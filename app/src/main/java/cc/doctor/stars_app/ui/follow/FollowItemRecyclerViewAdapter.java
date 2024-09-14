@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import cc.doctor.stars_app.databinding.FragmentFollowBinding;
+import cc.doctor.stars_app.databinding.ItemFollowBinding;
 
 public class FollowItemRecyclerViewAdapter extends RecyclerView.Adapter<FollowItemRecyclerViewAdapter.ViewHolder> {
 
@@ -22,7 +22,7 @@ public class FollowItemRecyclerViewAdapter extends RecyclerView.Adapter<FollowIt
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(FragmentFollowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(ItemFollowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
     }
 
@@ -44,7 +44,7 @@ public class FollowItemRecyclerViewAdapter extends RecyclerView.Adapter<FollowIt
         public final TextView name;
         public final TextView description;
 
-        public ViewHolder(FragmentFollowBinding binding) {
+        public ViewHolder(ItemFollowBinding binding) {
             super(binding.getRoot());
             avatar = binding.avatar;
             name = binding.name;
