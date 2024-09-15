@@ -28,8 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.doctor.stars_app.R;
-import cc.doctor.stars_app.databinding.FeedbackItemBinding;
 import cc.doctor.stars_app.databinding.FragmentFeedbackBinding;
+import cc.doctor.stars_app.databinding.ItemFeedbackBinding;
 import cc.doctor.stars_app.http.Response;
 import cc.doctor.stars_app.http.user.FeedbackResponse;
 import cc.doctor.stars_app.state.LoginState;
@@ -205,7 +205,7 @@ public class FeedbackFragment extends Fragment {
         @NonNull
         @Override
         public FeedbackItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new FeedbackItemViewHolder(FeedbackItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+            return new FeedbackItemViewHolder(ItemFeedbackBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
         }
 
         @Override
@@ -239,7 +239,7 @@ public class FeedbackFragment extends Fragment {
             super(itemView);
         }
 
-        public FeedbackItemViewHolder(FeedbackItemBinding binding) {
+        public FeedbackItemViewHolder(ItemFeedbackBinding binding) {
             super(binding.getRoot());
             this.feedback = binding.feedback;
             this.image1 = binding.image1;

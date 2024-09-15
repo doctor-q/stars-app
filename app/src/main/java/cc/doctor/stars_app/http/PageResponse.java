@@ -39,4 +39,11 @@ public class PageResponse<T> extends Response<List<T>> {
     public void setPages(Integer pages) {
         this.pages = pages;
     }
+
+    public static <D> PageResponse<D> pageFail(int code, String message) {
+        PageResponse<D> response = new PageResponse<>();
+        response.setCode(code);
+        response.setMsg(message);
+        return response;
+    }
 }

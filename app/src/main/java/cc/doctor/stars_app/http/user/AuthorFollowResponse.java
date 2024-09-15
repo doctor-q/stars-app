@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 public class AuthorFollowResponse extends AuthorResponse {
     private Integer userId;
-    private LocalDateTime followTime;
+    private Integer followStatus;
+    private String followTime;
 
     public Integer getUserId() {
         return userId;
@@ -14,11 +15,19 @@ public class AuthorFollowResponse extends AuthorResponse {
         this.userId = userId;
     }
 
-    public LocalDateTime getFollowTime() {
+    public Integer getFollowStatus() {
+        return followStatus;
+    }
+
+    public void setFollowStatus(Integer followStatus) {
+        this.followStatus = followStatus;
+    }
+
+    public String getFollowTime() {
         return followTime;
     }
 
-    public void setFollowTime(LocalDateTime followTime) {
+    public void setFollowTime(String followTime) {
         this.followTime = followTime;
     }
 }

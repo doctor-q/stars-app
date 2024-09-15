@@ -58,8 +58,10 @@ public class MineLoginFragment extends Fragment {
                     binding.age.setText(userDetail.getChildAge());
                     // tab
                     List<RsCollectResponse> collectResponses = userDetail.getRsCollectPage().getData();
-                    viewPagerAdapter.getCollectAdapter().getRsCollectList().addAll(collectResponses);
-                    viewPagerAdapter.notifyDataSetChanged();
+                    if (collectResponses != null && !collectResponses.isEmpty()) {
+                        viewPagerAdapter.getCollectAdapter().getRsCollectList().addAll(collectResponses);
+                        viewPagerAdapter.notifyDataSetChanged();
+                    }
                 } else {
                     ToastUtils.error(getContext(), userDetailResponseResponse.getMsg());
                 }
