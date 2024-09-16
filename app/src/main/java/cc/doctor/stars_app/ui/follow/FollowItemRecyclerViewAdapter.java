@@ -55,7 +55,7 @@ public class FollowItemRecyclerViewAdapter extends RecyclerView.Adapter<FollowIt
         if (authorFollow.getFollowStatus() == YesNo.NO.getValue()) {
             holder.followButton.setText("关注");
         } else {
-            holder.followButton.setText("取消");
+            holder.followButton.setText("取消关注");
         }
         holder.followButton.setOnClickListener(new View.OnClickListener() {
             @Override

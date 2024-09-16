@@ -16,12 +16,14 @@ public class TabListener extends ViewPager.SimpleOnPageChangeListener implements
     private List<View> tabs;
     private ViewPager viewPager;
     private View cursor;
+    private View currentTab;
 
     public TabListener(ConstraintLayout layout, List<View> tabs, ViewPager viewPager, View cursor) {
         this.layout = layout;
         this.tabs = tabs;
         this.viewPager = viewPager;
         this.cursor = cursor;
+        this.currentTab = tabs.get(0);
     }
 
     public void bind() {
@@ -33,6 +35,9 @@ public class TabListener extends ViewPager.SimpleOnPageChangeListener implements
 
     @Override
     public void onClick(View v) {
+        if (v == currentTab) {
+            return;
+        }
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
         constraintSet.connect(cursor.getId(), ConstraintSet.START, v.getId(), ConstraintSet.START);
@@ -47,9 +52,13 @@ public class TabListener extends ViewPager.SimpleOnPageChangeListener implements
     @Override
     public void onPageSelected(int position) {
         View view = tabs.get(position);
+        currentTab = view;
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
         constraintSet.connect(cursor.getId(), ConstraintSet.START, view.getId(), ConstraintSet.START);
         constraintSet.applyTo(layout);
+        onTabChange(currentTab);
     }
+
+    public void onTabChange(View currentTab) {}
 }

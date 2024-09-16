@@ -56,7 +56,7 @@ public class RsResponse {
         this.author = author;
     }
 
-    public class Aweme {
+    public static class Aweme {
         private Integer authorId;
         private String awAuthorNickname;
         private String awAuthorSecId;

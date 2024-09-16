@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.video.VideoFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <VideoView
+    <androidx.media3.ui.PlayerView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:use_controller="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -25,14 +25,30 @@
         android:visibility="invisible"
         android:src="@drawable/baseline_play_circle_outline_24"/>
 
+    <cc.doctor.stars_app.ui.view.SquareImageView
+        android:id="@+id/avatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/follow"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/baseline_add_box_24"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
+        app:layout_constraintStart_toStartOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="@id/avatar"/>
+
     <ImageView
         android:id="@+id/collect"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/baseline_star_border_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/avatar"/>
 
     <ImageView
         android:id="@+id/link"
@@ -41,6 +57,25 @@
         android:src="@drawable/baseline_link_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/collect"/>
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/title"
+        android:layout_marginBottom="@dimen/near_margin"
+        android:textSize="20dp"
+        android:text="作者昵称"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/seek_bar"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:text="视频标题"/>
 
     <SeekBar
         android:id="@+id/seek_bar"

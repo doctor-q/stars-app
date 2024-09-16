@@ -32,10 +32,10 @@ public class MineLoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         MineViewModel mineViewModel = new ViewModelProvider(this).get(MineViewModel.class);
         binding = FragmentMineLoginBinding.inflate(inflater, container, false);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getContext());
-        binding.viewPage.setAdapter(viewPagerAdapter);
-        new TabListener(binding.getRoot(), Arrays.asList(binding.collect, binding.history, binding.follow),
-                binding.viewPage, binding.cursor).bind();
+        List<View> tabs = Arrays.asList(binding.collect, binding.history, binding.follow);
+        MinePagerAdapter minePagerAdapter = new MinePagerAdapter(getContext(), tabs);
+        binding.viewPage.setAdapter(minePagerAdapter);
+        new TabListener(binding.getRoot(), tabs, binding.viewPage, binding.cursor).bind();
         binding.settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,8 +59,8 @@ public class MineLoginFragment extends Fragment {
                     // tab
                     List<RsCollectResponse> collectResponses = userDetail.getRsCollectPage().getData();
                     if (collectResponses != null && !collectResponses.isEmpty()) {
-                        viewPagerAdapter.getCollectAdapter().getRsCollectList().addAll(collectResponses);
-                        viewPagerAdapter.notifyDataSetChanged();
+                        minePagerAdapter.getCollectAdapter().getRsCollectList().addAll(collectResponses);
+                        minePagerAdapter.notifyDataSetChanged();
                     }
                 } else {
                     ToastUtils.error(getContext(), userDetailResponseResponse.getMsg());

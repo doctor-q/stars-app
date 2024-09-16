@@ -15,6 +15,7 @@ public class RetrofitFactory {
     public static LoginApi loginApi;
 
     public static UserApi userApi;
+    public static ResourceApi resourceApi;
 
     static {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.31.155:8080")
@@ -23,6 +24,7 @@ public class RetrofitFactory {
                 .build();
         loginApi = retrofit.create(LoginApi.class);
         userApi = retrofit.create(UserApi.class);
+        resourceApi = retrofit.create(ResourceApi.class);
     }
 
     public static class ResponseCallback<T> implements Callback<Response<T>> {
