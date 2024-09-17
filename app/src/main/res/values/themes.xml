@@ -15,6 +15,7 @@
         <!--        EditTextStyle-->
         <item name="android:textViewStyle">@style/textViewStyle</item>
         <item name="editTextStyle">@style/editTextStyle</item>
+        <item name="autoCompleteTextViewStyle">@style/editTextStyle</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinnerStyle</item>
     </style>
 <!--    TextView默认样式-->

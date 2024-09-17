@@ -20,7 +20,11 @@ import java.util.List;
 
 import cc.doctor.stars_app.R;
 import cc.doctor.stars_app.databinding.FragmentSearchBinding;
+import cc.doctor.stars_app.http.PageResponse;
+import cc.doctor.stars_app.http.user.SearchHisResponse;
+import cc.doctor.stars_app.state.LoginState;
 import cc.doctor.stars_app.ui.view.TabListener;
+import cc.doctor.stars_app.utils.ToastUtils;
 
 public class SearchFragment extends Fragment {
 
@@ -36,18 +40,37 @@ public class SearchFragment extends Fragment {
         // 搜索历史
         SearchHisAdapter searchHisAdapter = new SearchHisAdapter();
         binding.searchHisList.setAdapter(searchHisAdapter);
-        searchViewModel.getSearchHis().observe(getViewLifecycleOwner(), new Observer<List<SearchHis>>() {
+        searchViewModel.getSearchHisResponse().observe(getViewLifecycleOwner(), new Observer<PageResponse<SearchHisResponse>>() {
             @Override
-            public void onChanged(List<SearchHis> searchHis) {
-                searchHisAdapter.setSearchHisList(searchHis);
+            public void onChanged(PageResponse<SearchHisResponse> response) {
+                if (response.isSuccess()) {
+                    List<SearchHisResponse> data = response.getData();
+                    if (data.size() > 3) {
+                        searchViewModel.getSearchHis().setValue(data.subList(0, 3));
+                    } else {
+                        searchViewModel.getSearchHis().setValue(data);
+                    }
+                } else {
+                    ToastUtils.error(getContext(), response.getMsg());
+                }
+            }
+        });
+        searchViewModel.getSearchHis().observe(getViewLifecycleOwner(), new Observer<List<SearchHisResponse>>() {
+            @Override
+            public void onChanged(List<SearchHisResponse> searchHisResponses) {
+                searchHisAdapter.setSearchHisList(searchHisResponses);
                 searchHisAdapter.notifyDataSetChanged();
             }
         });
-        searchViewModel.getSearchHis().postValue(SearchHis.top3());
+        searchViewModel.searchHis(LoginState.getInstance(getContext()).token());
         binding.searchHis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchViewModel.getSearchHis().postValue(SearchHis.all());
+                PageResponse<SearchHisResponse> response = searchViewModel.getSearchHisResponse().getValue();
+                if (response != null && response.isSuccess()) {
+                    List<SearchHisResponse> data = response.getData();
+                    searchViewModel.getSearchHis().setValue(data);
+                }
             }
         });
         // 自动完成文本
@@ -72,6 +95,15 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.navigation_label_cloud);
+            }
+        });
+        // 搜索
+        binding.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("keywords", binding.autoCompleteTextView.getText().toString());
+                Navigation.findNavController(v).navigate(R.id.action_navigation_search_result, bundle);
             }
         });
         // 猜你想搜

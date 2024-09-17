@@ -1,5 +1,6 @@
 package cc.doctor.stars_app.ui.search;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.doctor.stars_app.R;
+import cc.doctor.stars_app.http.user.SearchHisResponse;
 
 public class SearchHisAdapter extends BaseAdapter {
 
-    private List<SearchHis> searchHisList = new ArrayList<>();
+    private List<SearchHisResponse> searchHisList = new ArrayList<>();
 
     public SearchHisAdapter() {
     }
 
-    public void setSearchHisList(List<SearchHis> searchHisList) {
+    public void setSearchHisList(List<SearchHisResponse> searchHisList) {
         this.searchHisList = searchHisList;
     }
 
@@ -51,14 +53,16 @@ public class SearchHisAdapter extends BaseAdapter {
         } else {
             view = convertView;
         }
-        SearchHis searchHis = searchHisList.get(position);
+        SearchHisResponse searchHis = searchHisList.get(position);
         TextView textView = (TextView) view.findViewById(R.id.search_his_text);
-        textView.setText(searchHis.getHis());
+        textView.setText(searchHis.getKeywords());
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 搜索结果页
-                Navigation.findNavController(parent).navigate(R.id.navigation_search_result);
+                Bundle bundle = new Bundle();
+                bundle.putString("keywords", textView.getText().toString());
+                Navigation.findNavController(parent).navigate(R.id.action_navigation_search_result, bundle);
             }
         });
         return view;

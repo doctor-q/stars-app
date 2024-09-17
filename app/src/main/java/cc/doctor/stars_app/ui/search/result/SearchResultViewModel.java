@@ -5,15 +5,20 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-public class SearchResultViewModel extends ViewModel {
-    private MutableLiveData<List<SearchResult>> searchResultList;
+import cc.doctor.stars_app.http.Response;
+import cc.doctor.stars_app.http.RetrofitFactory;
+import cc.doctor.stars_app.http.user.RsResponse;
+import retrofit2.Call;
 
-    public SearchResultViewModel() {
-        this.searchResultList = new MutableLiveData<>();
-        this.searchResultList.setValue(SearchResult.results());
+public class SearchResultViewModel extends ViewModel {
+    private MutableLiveData<Response<List<RsResponse>>> searchRsResponse = new MutableLiveData<>();
+
+    public MutableLiveData<Response<List<RsResponse>>> getSearchRsResponse() {
+        return searchRsResponse;
     }
 
-    public MutableLiveData<List<SearchResult>> getSearchResultList() {
-        return searchResultList;
+    public void searchRs(String keywords, String token) {
+        Call<Response<List<RsResponse>>> call = RetrofitFactory.searchApi.searchRs(keywords, 15, token);
+        call.enqueue(new RetrofitFactory.ResponseCallback<>(searchRsResponse));
     }
 }

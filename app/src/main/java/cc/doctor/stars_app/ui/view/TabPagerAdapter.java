@@ -35,21 +35,25 @@ public class TabPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View view = tabs.get(position);
-        for (TabPage page : pages) {
-            if (page.tabId() == view.getId()) {
-                page.onCreateView();
-                container.addView(page.getView());
-                return page.getView();
+        if (container.getChildAt(position) == null) {
+            View view = tabs.get(position);
+            for (TabPage page : pages) {
+                if (page.tabId() == view.getId()) {
+                    page.onCreateView();
+                    container.addView(page.getView());
+                    return page.getView();
+                }
             }
+            container.addView(pages.get(0).getView());
+            return pages.get(0).getView();
+        } else {
+            return container.getChildAt(position);
         }
-        container.addView(pages.get(0).getView());
-        return pages.get(0).getView();
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeViewAt(position);
+
     }
 
     public TabPage getPage(View tab) {

@@ -39,7 +39,7 @@ public class SettingsFragment extends Fragment {
             }
         });
         // 通知设置
-        binding.play.setOnClickListener(new View.OnClickListener() {
+        binding.notify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.navigation_settings_notify);
@@ -50,6 +50,13 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.navigation_feedback);
+            }
+        });
+        // 反馈
+        binding.about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.navigation_settings_about);
             }
         });
         // 退出登录

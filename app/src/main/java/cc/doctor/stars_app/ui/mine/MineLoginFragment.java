@@ -23,6 +23,9 @@ import cc.doctor.stars_app.http.user.RsCollectResponse;
 import cc.doctor.stars_app.http.user.RsHisResponse;
 import cc.doctor.stars_app.http.user.UserDetailResponse;
 import cc.doctor.stars_app.state.LoginState;
+import cc.doctor.stars_app.ui.follow.FollowItemRecyclerViewAdapter;
+import cc.doctor.stars_app.ui.follow.FollowViewModel;
+import cc.doctor.stars_app.ui.video.RsCardAdapter;
 import cc.doctor.stars_app.ui.view.TabListener;
 import cc.doctor.stars_app.ui.view.TabPagerAdapter;
 import cc.doctor.stars_app.utils.ToastUtils;
@@ -40,11 +43,11 @@ public class MineLoginFragment extends Fragment {
         // tab
         List<View> tabs = Arrays.asList(binding.collect, binding.history, binding.follow);
         List<MinePage<?>> pages = new ArrayList<>();
-        RsCollectAdapter rsCollectAdapter = new RsCollectAdapter();
-        pages.add(new MinePage<>(getContext(), binding.collect.getId(), rsCollectAdapter, 2));
+        RsCardAdapter rsCardAdapter = new RsCardAdapter();
+        pages.add(new MinePage<>(getContext(), binding.collect.getId(), rsCardAdapter, 2));
         RsHistoryAdapter rsHistoryAdapter = new RsHistoryAdapter();
         pages.add(new MinePage<>(getContext(), binding.history.getId(), rsHistoryAdapter));
-        FollowAdapter followAdapter = new FollowAdapter();
+        FollowItemRecyclerViewAdapter followAdapter = new FollowItemRecyclerViewAdapter(getContext(), new ViewModelProvider(this).get(FollowViewModel.class), getViewLifecycleOwner());
         pages.add(new MinePage<>(getContext(), binding.follow.getId(), followAdapter));
         TabPagerAdapter minePagerAdapter = new TabPagerAdapter(tabs, pages);
         binding.viewPage.setAdapter(minePagerAdapter);
@@ -73,9 +76,9 @@ public class MineLoginFragment extends Fragment {
                     // tab
                     List<RsCollectResponse> collectResponses = userDetail.getRsCollectPage().getData();
                     if (collectResponses != null && !collectResponses.isEmpty()) {
-                        int position = rsCollectAdapter.getRsCollectList().size();
-                        rsCollectAdapter.getRsCollectList().addAll(collectResponses);
-                        rsCollectAdapter.notifyItemRangeInserted(position, collectResponses.size());
+                        int position = rsCardAdapter.getRsList().size();
+                        rsCardAdapter.getRsList().addAll(collectResponses);
+                        rsCardAdapter.notifyItemRangeInserted(position, collectResponses.size());
                     }
                     List<RsHisResponse> hisResponses = userDetail.getRsHisPage().getData();
                     if (hisResponses != null && !hisResponses.isEmpty()) {
@@ -85,8 +88,8 @@ public class MineLoginFragment extends Fragment {
                     }
                     List<AuthorFollowResponse> followResponses = userDetail.getFollowPage().getData();
                     if (followResponses != null && !followResponses.isEmpty()) {
-                        int position = followAdapter.getAuthorList().size();
-                        followAdapter.getAuthorList().addAll(followResponses);
+                        int position = followAdapter.getmValues().size();
+                        followAdapter.getmValues().addAll(followResponses);
                         followAdapter.notifyItemRangeInserted(position, followResponses.size());
                     }
                 } else {

@@ -15,13 +15,19 @@
         android:id="@+id/navigation_search"
         android:name="cc.doctor.stars_app.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_result"
+            app:destination="@id/navigation_search_result" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search_result"
         android:name="cc.doctor.stars_app.ui.search.result.SearchResultFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search_result" />
+        tools:layout="@layout/fragment_search_result" >
+        <argument android:name="keywords" app:argType="string" app:nullable="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_label_cloud"
