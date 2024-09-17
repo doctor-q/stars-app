@@ -1,15 +1,13 @@
 package cc.doctor.stars_app.http.user;
 
-import java.time.LocalDateTime;
-
 public class RsCollectResponse extends RsResponse {
-    private LocalDateTime collectTime;
+    private String collectTime;
 
-    public LocalDateTime getCollectTime() {
+    public String getCollectTime() {
         return collectTime;
     }
 
-    public void setCollectTime(LocalDateTime collectTime) {
+    public void setCollectTime(String collectTime) {
         this.collectTime = collectTime;
     }
 }

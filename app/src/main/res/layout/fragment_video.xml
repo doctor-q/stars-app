@@ -33,20 +33,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ImageView
+    <cc.doctor.stars_app.ui.view.StatusImageView
         android:id="@+id/follow"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/baseline_add_box_24"
+        app:drawables.no="@drawable/baseline_add_box_24"
+        app:drawables.yes="@drawable/baseline_check_circle_24"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintStart_toStartOf="@id/avatar"
         app:layout_constraintEnd_toEndOf="@id/avatar"/>
 
-    <ImageView
+    <cc.doctor.stars_app.ui.view.StatusImageView
         android:id="@+id/collect"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/baseline_star_border_24"
+        app:drawables.yes="@drawable/baseline_star_24"
+        app:drawables.no="@drawable/baseline_star_border_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/avatar"/>
 

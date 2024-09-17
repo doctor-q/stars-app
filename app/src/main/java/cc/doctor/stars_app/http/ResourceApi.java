@@ -1,5 +1,7 @@
 package cc.doctor.stars_app.http;
 
+import java.util.List;
+
 import cc.doctor.stars_app.http.user.RsCollectRequest;
 import cc.doctor.stars_app.http.user.RsDetailResponse;
 import retrofit2.Call;
@@ -13,9 +15,9 @@ public interface ResourceApi {
     Call<Response<Integer>> collect(@Body RsCollectRequest request, @Header("token") String token);
 
     @GET("rs/recommend")
-    Call<Response<RsDetailResponse>> recommend(@Header("token") String token);
+    Call<Response<List<RsDetailResponse>>> recommend(@Header("token") String token);
 
     @GET("rs/follow")
-    Call<Response<RsDetailResponse>> follow(@Header("token") String token);
+    Call<Response<List<RsDetailResponse>>> follow(@Header("token") String token);
 
 }

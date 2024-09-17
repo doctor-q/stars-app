@@ -1,15 +1,13 @@
 package cc.doctor.stars_app.http.user;
 
-import java.time.LocalDateTime;
-
 public class RsHisResponse extends RsResponse {
-    private LocalDateTime viewTime;
+    private String viewTime;
 
-    public LocalDateTime getViewTime() {
+    public String getViewTime() {
         return viewTime;
     }
 
-    public void setViewTime(LocalDateTime viewTime) {
+    public void setViewTime(String viewTime) {
         this.viewTime = viewTime;
     }
 }

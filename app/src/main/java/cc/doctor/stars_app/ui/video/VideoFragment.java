@@ -1,105 +1,146 @@
 package cc.doctor.stars_app.ui.video;
 
-import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import androidx.annotation.OptIn;
-import androidx.core.content.res.ResourcesCompat;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.media3.common.MediaItem;
 import androidx.media3.common.Player;
 import androidx.media3.common.util.UnstableApi;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.ui.PlayerView;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
-import cc.doctor.stars_app.R;
 import cc.doctor.stars_app.databinding.FragmentVideoBinding;
 import cc.doctor.stars_app.enums.YesNo;
 import cc.doctor.stars_app.http.Response;
-import cc.doctor.stars_app.http.RetrofitFactory;
-import cc.doctor.stars_app.http.user.RsCollectRequest;
 import cc.doctor.stars_app.http.user.RsDetailResponse;
 import cc.doctor.stars_app.state.LoginState;
+import cc.doctor.stars_app.ui.view.SwipeGestureDetector;
 import cc.doctor.stars_app.ui.view.TabPage;
-import retrofit2.Call;
+import cc.doctor.stars_app.utils.ToastUtils;
 
-public class VideoFragment implements TabPage {
-    private ViewGroup container;
-    private Integer tabId;
+public abstract class VideoFragment implements TabPage {
+    private final LifecycleOwner owner;
+    private final ViewGroup container;
+    private final Integer tabId;
 
-    private VideoState videoState;
     private FragmentVideoBinding binding;
-    public MutableLiveData<Response<Integer>> collectResponse = new MutableLiveData<>();
+    private VideoViewModel viewModel;
+    private List<RsDetailResponse> rsList = new ArrayList<>();
 
-    public VideoFragment(ViewGroup container, Integer tabId) {
+    public VideoFragment(LifecycleOwner owner, ViewGroup container, Integer tabId) {
+        this.owner = owner;
         this.container = container;
         this.tabId = tabId;
     }
 
-    public VideoState getVideoState() {
-        return videoState;
-    }
-
-    public void setVideoState(VideoState videoState) {
-        this.videoState = videoState;
-        play();
-    }
-
-    public MutableLiveData<Response<Integer>> getCollectResponse() {
-        return collectResponse;
-    }
-
-    public void onSuccessCollect(Integer id) {
-        RsDetailResponse rsDetail = videoState.getRsDetail();
-        if (Objects.equals(rsDetail.getId(), id)) {
-            int starId;
-            if (rsDetail.getCollectStatus() == YesNo.NO.getValue()) {
-                starId = R.drawable.baseline_star_24;
-            } else {
-                starId = R.drawable.baseline_star_border_24;
-            }
-            binding.collect.setImageDrawable(ResourcesCompat.getDrawable(container.getResources(), starId, null));
-            rsDetail.setCollectStatus(YesNo.reverse(rsDetail.getCollectStatus()));
-        }
-    }
+    abstract public void load(String token, MutableLiveData<Response<List<RsDetailResponse>>> data);
 
     @Override
     public void onCreateView() {
-        binding = FragmentVideoBinding.inflate(LayoutInflater.from(container.getContext()));
+        binding = FragmentVideoBinding.inflate(LayoutInflater.from(container.getContext()), container, false);
+        viewModel = new VideoViewModel();
+        viewModel.getCurrent().observe(owner, new Observer<RsDetailResponse>() {
+            @Override
+            public void onChanged(RsDetailResponse rsDetailResponse) {
+                play();
+            }
+        });
+        viewModel.getCollectResponse().observe(owner, new Observer<Response<Integer>>() {
+            @Override
+            public void onChanged(Response<Integer> integerResponse) {
+                if (integerResponse.isSuccess()) {
+                    binding.collect.reverse();
+                    RsDetailResponse rsDetail = viewModel.getCurrent().getValue();
+                    rsDetail.setCollectStatus(YesNo.reverse(rsDetail.getCollectStatus()));
+                } else {
+                    ToastUtils.error(container.getContext(), integerResponse.getMsg());
+                }
+            }
+        });
+        viewModel.getRsDetailList().observe(owner, new Observer<Response<List<RsDetailResponse>>>() {
+            @Override
+            public void onChanged(Response<List<RsDetailResponse>> listResponse) {
+                if (listResponse.isSuccess()) {
+                    List<RsDetailResponse> data = listResponse.getData();
+                    if (!data.isEmpty()) {
+                        viewModel.getCurrent().setValue(data.get(0));
+                        rsList.addAll(data);
+                    }
+                } else {
+                    ToastUtils.error(container.getContext(), listResponse.getMsg());
+                }
+            }
+        });
         if (!LoginState.getInstance(container.getContext()).logged()) {
             binding.collect.setVisibility(View.INVISIBLE);
         }
 
         PlayerView videoView = binding.videoView;
         videoView.setPlayer(new ExoPlayer.Builder(container.getContext()).build());
+        Player player = videoView.getPlayer();
         // 播放暂停
         videoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.play.setVisibility(View.VISIBLE);
-                videoView.getPlayer().pause();
+                if (player.isPlaying()) {
+                    binding.play.setVisibility(View.VISIBLE);
+                    player.pause();
+                }
             }
         });
+
+        SwipeGestureDetector gestureDetector = new SwipeGestureDetector(binding.getRoot().getContext(), new SwipeGestureDetector.GestureHandler() {
+            @Override
+            public void down() {
+                // 播放上一个视频
+                int i = rsList.indexOf(viewModel.getCurrent().getValue());
+                if (i > 0) {
+                    viewModel.getCurrent().setValue(rsList.get(i - 1));
+                }
+            }
+
+            @Override
+            public void up() {
+                // 播放下一个视频
+                int i = rsList.indexOf(viewModel.getCurrent().getValue());
+                if (i + 1 == rsList.size()) {
+                    load(LoginState.getInstance(container.getContext()).token(), viewModel.getRsDetailList());
+                } else {
+                    viewModel.getCurrent().setValue(rsList.get(i + 1));
+                }
+            }
+        });
+        videoView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+
         binding.play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.play.setVisibility(View.INVISIBLE);
-                videoView.getPlayer().play();
+                if (!player.isPlaying()) {
+                    binding.play.setVisibility(View.INVISIBLE);
+                    player.play();
+                }
             }
         });
         // 收藏
         binding.collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RsDetailResponse rsDetail = videoState.getRsDetail();
-                Call<Response<Integer>> call = RetrofitFactory.resourceApi.collect(new RsCollectRequest(rsDetail.getId(), YesNo.reverse(rsDetail.getCollectStatus())),
-                        LoginState.getInstance(v.getContext()).token());
-                call.enqueue(new RetrofitFactory.ResponseCallback<>(collectResponse));
+                viewModel.collect(LoginState.getInstance(v.getContext()).token());
             }
         });
         // 跳转原始链接
@@ -125,31 +166,19 @@ public class VideoFragment implements TabPage {
 
     @OptIn(markerClass = UnstableApi.class)
     public void play() {
-        if (binding == null) {
+        RsDetailResponse rsDetail = viewModel.getCurrent().getValue();
+        if (rsDetail == null) {
+            load(LoginState.getInstance(container.getContext()).token(), viewModel.getRsDetailList());
             return;
         }
-
-        RsDetailResponse rsDetail = videoState.getRsDetail();
         RsDetailResponse.AwemeDetail aweme = rsDetail.getAwemeDetail();
         binding.avatar.setUrl(rsDetail.getAuthor().getAvatarUrl());
-        binding.author.setText("@" + rsDetail.getAuthor().getNickname());
+        binding.author.setText(String.format("@%s", rsDetail.getAuthor().getNickname()));
         binding.title.setText(aweme.getAwTitle());
         // 收藏按钮
-        int starId;
-        if (rsDetail.getCollectStatus() == YesNo.NO.getValue()) {
-            starId = R.drawable.baseline_star_border_24;
-        } else {
-            starId = R.drawable.baseline_star_24;
-        }
-        binding.collect.setImageDrawable(ResourcesCompat.getDrawable(binding.getRoot().getResources(), starId, null));
+        binding.collect.setStatus(rsDetail.getCollectStatus());
         // 关注图标
-        int followId;
-        if (rsDetail.getFollowStatus() == YesNo.NO.getValue()) {
-            followId = R.drawable.baseline_add_box_24;
-        } else {
-            followId = R.drawable.baseline_check_circle_24;
-        }
-        binding.follow.setImageDrawable(ResourcesCompat.getDrawable(binding.getRoot().getResources(), followId, null));
+        binding.follow.setStatus(rsDetail.getFollowStatus());
         // 视频
         PlayerView videoView = binding.videoView;
         if (videoView.getPlayer().isPlaying()) {
@@ -179,7 +208,7 @@ public class VideoFragment implements TabPage {
     }
 
     @Override
-    public void onSelected(Context context) {
-
+    public void onInit() {
+        play();
     }
 }

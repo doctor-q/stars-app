@@ -11,16 +11,20 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import cc.doctor.stars_app.R;
 import cc.doctor.stars_app.databinding.FragmentMineLoginBinding;
 import cc.doctor.stars_app.http.Response;
+import cc.doctor.stars_app.http.user.AuthorFollowResponse;
 import cc.doctor.stars_app.http.user.RsCollectResponse;
+import cc.doctor.stars_app.http.user.RsHisResponse;
 import cc.doctor.stars_app.http.user.UserDetailResponse;
 import cc.doctor.stars_app.state.LoginState;
 import cc.doctor.stars_app.ui.view.TabListener;
+import cc.doctor.stars_app.ui.view.TabPagerAdapter;
 import cc.doctor.stars_app.utils.ToastUtils;
 
 public class MineLoginFragment extends Fragment {
@@ -32,8 +36,17 @@ public class MineLoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         MineViewModel mineViewModel = new ViewModelProvider(this).get(MineViewModel.class);
         binding = FragmentMineLoginBinding.inflate(inflater, container, false);
+
+        // tab
         List<View> tabs = Arrays.asList(binding.collect, binding.history, binding.follow);
-        MinePagerAdapter minePagerAdapter = new MinePagerAdapter(getContext(), tabs);
+        List<MinePage<?>> pages = new ArrayList<>();
+        RsCollectAdapter rsCollectAdapter = new RsCollectAdapter();
+        pages.add(new MinePage<>(getContext(), binding.collect.getId(), rsCollectAdapter, 2));
+        RsHistoryAdapter rsHistoryAdapter = new RsHistoryAdapter();
+        pages.add(new MinePage<>(getContext(), binding.history.getId(), rsHistoryAdapter));
+        FollowAdapter followAdapter = new FollowAdapter();
+        pages.add(new MinePage<>(getContext(), binding.follow.getId(), followAdapter));
+        TabPagerAdapter minePagerAdapter = new TabPagerAdapter(tabs, pages);
         binding.viewPage.setAdapter(minePagerAdapter);
         new TabListener(binding.getRoot(), tabs, binding.viewPage, binding.cursor).bind();
         binding.settings.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +55,7 @@ public class MineLoginFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.navigation_settings);
             }
         });
+
         // 个人信息
         mineViewModel.getUserDetailResponse().observe(getViewLifecycleOwner(), new Observer<Response<UserDetailResponse>>() {
             @Override
@@ -59,8 +73,21 @@ public class MineLoginFragment extends Fragment {
                     // tab
                     List<RsCollectResponse> collectResponses = userDetail.getRsCollectPage().getData();
                     if (collectResponses != null && !collectResponses.isEmpty()) {
-                        minePagerAdapter.getCollectAdapter().getRsCollectList().addAll(collectResponses);
-                        minePagerAdapter.notifyDataSetChanged();
+                        int position = rsCollectAdapter.getRsCollectList().size();
+                        rsCollectAdapter.getRsCollectList().addAll(collectResponses);
+                        rsCollectAdapter.notifyItemRangeInserted(position, collectResponses.size());
+                    }
+                    List<RsHisResponse> hisResponses = userDetail.getRsHisPage().getData();
+                    if (hisResponses != null && !hisResponses.isEmpty()) {
+                        int position = rsHistoryAdapter.getRsHisList().size();
+                        rsHistoryAdapter.getRsHisList().addAll(hisResponses);
+                        rsHistoryAdapter.notifyItemRangeInserted(position, hisResponses.size());
+                    }
+                    List<AuthorFollowResponse> followResponses = userDetail.getFollowPage().getData();
+                    if (followResponses != null && !followResponses.isEmpty()) {
+                        int position = followAdapter.getAuthorList().size();
+                        followAdapter.getAuthorList().addAll(followResponses);
+                        followAdapter.notifyItemRangeInserted(position, followResponses.size());
                     }
                 } else {
                     ToastUtils.error(getContext(), userDetailResponseResponse.getMsg());

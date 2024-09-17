@@ -8,7 +8,7 @@ public class UserDetailResponse extends UserInfo {
 
     private PageResponse<RsCollectResponse> rsCollectPage;
     private PageResponse<RsHisResponse> rsHisPage;
-    private PageResponse<AuthorResponse> followPage;
+    private PageResponse<AuthorFollowResponse> followPage;
 
     public String getRoleName() {
         return roleName;
@@ -42,11 +42,11 @@ public class UserDetailResponse extends UserInfo {
         this.rsHisPage = rsHisPage;
     }
 
-    public PageResponse<AuthorResponse> getFollowPage() {
+    public PageResponse<AuthorFollowResponse> getFollowPage() {
         return followPage;
     }
 
-    public void setFollowPage(PageResponse<AuthorResponse> followPage) {
+    public void setFollowPage(PageResponse<AuthorFollowResponse> followPage) {
         this.followPage = followPage;
     }
 }

@@ -20,6 +20,7 @@ import cc.doctor.stars_app.http.user.AuthorFollowRequest;
 import cc.doctor.stars_app.http.user.AuthorFollowResponse;
 import cc.doctor.stars_app.state.LoginState;
 import cc.doctor.stars_app.ui.view.SquareImageView;
+import cc.doctor.stars_app.ui.view.StatusButton;
 import retrofit2.Call;
 
 public class FollowItemRecyclerViewAdapter extends RecyclerView.Adapter<FollowItemRecyclerViewAdapter.ViewHolder> {
@@ -52,11 +53,7 @@ public class FollowItemRecyclerViewAdapter extends RecyclerView.Adapter<FollowIt
         holder.avatar.setUrl(authorFollow.getAvatarUrl());
         holder.name.setText(authorFollow.getNickName());
         holder.description.setText(authorFollow.getDescription());
-        if (authorFollow.getFollowStatus() == YesNo.NO.getValue()) {
-            holder.followButton.setText("关注");
-        } else {
-            holder.followButton.setText("取消关注");
-        }
+        holder.followButton.setStatus(authorFollow.getFollowStatus());
         holder.followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +79,7 @@ public class FollowItemRecyclerViewAdapter extends RecyclerView.Adapter<FollowIt
         public final SquareImageView avatar;
         public final TextView name;
         public final TextView description;
-        public final Button followButton;
+        public final StatusButton followButton;
 
         public ViewHolder(ItemFollowBinding binding) {
             super(binding.getRoot());

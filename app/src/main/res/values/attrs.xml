@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StatusView">
+        <attr name="drawables.yes" format="reference" />
+        <attr name="drawables.no" format="reference" />
+        <attr name="text.yes" format="reference" />
+        <attr name="text.no" format="reference" />
+    </declare-styleable>
+</resources>

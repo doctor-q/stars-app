@@ -47,6 +47,11 @@ public class TabPagerAdapter extends PagerAdapter {
         return pages.get(0).getView();
     }
 
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        container.removeViewAt(position);
+    }
+
     public TabPage getPage(View tab) {
         for (TabPage page : pages) {
             if (page.tabId() == tab.getId()) {
@@ -54,5 +59,9 @@ public class TabPagerAdapter extends PagerAdapter {
             }
         }
         return null;
+    }
+
+    public void onInit() {
+        pages.get(0).onInit();
     }
 }

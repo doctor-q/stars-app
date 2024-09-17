@@ -1,7 +1,5 @@
 package cc.doctor.stars_app.http.user;
 
-import java.time.LocalDateTime;
-
 import cc.doctor.stars_app.enums.YesNo;
 
 public class AuthorFollowResponse extends AuthorResponse {

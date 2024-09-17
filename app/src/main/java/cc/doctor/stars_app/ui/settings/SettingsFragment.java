@@ -31,6 +31,20 @@ public class SettingsFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.navigation_settings_user);
             }
         });
+        // 播放设置
+        binding.play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.navigation_settings_play);
+            }
+        });
+        // 通知设置
+        binding.play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.navigation_settings_notify);
+            }
+        });
         // 反馈
         binding.feedback.setOnClickListener(new View.OnClickListener() {
             @Override

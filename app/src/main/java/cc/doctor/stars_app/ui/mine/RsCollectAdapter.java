@@ -25,7 +25,6 @@ public class RsCollectAdapter extends RecyclerView.Adapter<RsCollectAdapter.RsCo
     @Override
     public RsCollectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new RsCollectViewHolder(ItemResourceCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
     }
 
     @Override

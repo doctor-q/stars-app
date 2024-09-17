@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -20,11 +22,9 @@ import cc.doctor.stars_app.http.Response;
 import cc.doctor.stars_app.http.user.RsDetailResponse;
 import cc.doctor.stars_app.state.LoginState;
 import cc.doctor.stars_app.ui.video.VideoFragment;
-import cc.doctor.stars_app.ui.video.VideoState;
 import cc.doctor.stars_app.ui.view.TabListener;
 import cc.doctor.stars_app.ui.view.TabPage;
 import cc.doctor.stars_app.ui.view.TabPagerAdapter;
-import cc.doctor.stars_app.utils.ToastUtils;
 
 public class HomeFragment extends Fragment {
 
@@ -49,72 +49,50 @@ public class HomeFragment extends Fragment {
         List<View> tabs = new ArrayList<>();
         tabs.add(binding.homeDiscover);
         List<VideoFragment> pages = new ArrayList<>();
-        pages.add(new VideoFragment(binding.viewPage, binding.homeDiscover.getId()));
+        pages.add(new VideoFragment(getViewLifecycleOwner(), binding.viewPage, binding.homeDiscover.getId()) {
+
+            @Override
+            public void load(String token, MutableLiveData<Response<List<RsDetailResponse>>> data) {
+                homeViewModel.recommend(token, data);
+            }
+        });
         if (logged) {
             tabs.add(binding.homeFollow);
-            pages.add(new VideoFragment(binding.viewPage, binding.homeFollow.getId()));
-        }
-        TabPagerAdapter homePagerAdapter = new TabPagerAdapter(tabs, pages);
-        // 收藏
-        for (VideoFragment videoFragment : pages) {
-            videoFragment.getCollectResponse().observe(getViewLifecycleOwner(), new Observer<Response<Integer>>() {
+            pages.add(new VideoFragment(getViewLifecycleOwner(), binding.viewPage, binding.homeFollow.getId()) {
+
                 @Override
-                public void onChanged(Response<Integer> integerResponse) {
-                    if (integerResponse.isSuccess()) {
-                        videoFragment.onSuccessCollect(integerResponse.getData());
-                    } else {
-                        ToastUtils.error(getContext(), integerResponse.getMsg());
-                    }
+                public void load(String token, MutableLiveData<Response<List<RsDetailResponse>>> data) {
+                    homeViewModel.follow(token, data);
                 }
             });
         }
+        TabPagerAdapter homePagerAdapter = new TabPagerAdapter(tabs, pages);
         binding.viewPage.setAdapter(homePagerAdapter);
         new TabListener(binding.getRoot(), tabs, binding.viewPage, binding.cursor) {
             @Override
             public void onTabChange(View currentTab) {
                 TabPage page = homePagerAdapter.getPage(currentTab);
                 VideoFragment videoFragment = (VideoFragment) page;
-                if (videoFragment.getVideoState() != null) {
-                    videoFragment.play();
-                } else {
-                    if (currentTab.getId() == binding.homeDiscover.getId()) {
-                        homeViewModel.recommend(LoginState.getInstance(getContext()).token());
-                    } else {
-                        homeViewModel.follow(LoginState.getInstance(getContext()).token());
-                    }
-                }
+                videoFragment.play();
             }
         }.bind();
-        // 视频数据
-        homeViewModel.getRecommend().observe(getViewLifecycleOwner(), new Observer<Response<RsDetailResponse>>() {
-            @Override
-            public void onChanged(Response<RsDetailResponse> rsDetailResponseResponse) {
-                if (rsDetailResponseResponse.isSuccess()) {
-                    VideoState videoState = new VideoState(rsDetailResponseResponse.getData());
-                    pages.get(0).setVideoState(videoState);
-                } else {
-                    ToastUtils.error(getContext(), rsDetailResponseResponse.getMsg());
-                }
-            }
-        });
-        homeViewModel.getFollow().observe(getViewLifecycleOwner(), new Observer<Response<RsDetailResponse>>() {
-            @Override
-            public void onChanged(Response<RsDetailResponse> rsDetailResponseResponse) {
-                if (rsDetailResponseResponse.isSuccess()) {
-                    VideoState videoState = new VideoState(rsDetailResponseResponse.getData());
-                    pages.get(1).setVideoState(videoState);
-                } else {
-                    ToastUtils.error(getContext(), rsDetailResponseResponse.getMsg());
-                }
-            }
-        });
         return root;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        homeViewModel.recommend(LoginState.getInstance(getContext()).token());
+        ActionBar supportActionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (supportActionBar != null)
+            supportActionBar.hide();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ActionBar supportActionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (supportActionBar != null)
+            supportActionBar.show();
     }
 
     @Override

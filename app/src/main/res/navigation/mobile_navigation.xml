@@ -38,20 +38,38 @@
     <fragment
         android:id="@+id/navigation_settings"
         android:name="cc.doctor.stars_app.ui.settings.SettingsFragment"
-        android:label="@string/title_mine"
+        android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/navigation_settings_user"
         android:name="cc.doctor.stars_app.ui.settings.SettingsUserFragment"
-        android:label="@string/title_mine"
+        android:label="@string/title_settings_user"
         tools:layout="@layout/fragment_settings_user" />
+
+    <fragment
+        android:id="@+id/navigation_settings_play"
+        android:name="cc.doctor.stars_app.ui.settings.SettingsPlayFragment"
+        android:label="@string/title_settings_play"
+        tools:layout="@layout/fragment_settings_play" />
+
+    <fragment
+        android:id="@+id/navigation_settings_notify"
+        android:name="cc.doctor.stars_app.ui.settings.SettingsNotifyFragment"
+        android:label="@string/title_settings_notify"
+        tools:layout="@layout/fragment_settings_notify" />
 
     <fragment
         android:id="@+id/navigation_feedback"
         android:name="cc.doctor.stars_app.ui.settings.FeedbackFragment"
-        android:label="@string/title_mine"
+        android:label="@string/title_feedback"
         tools:layout="@layout/fragment_feedback" />
+
+    <fragment
+        android:id="@+id/navigation_settings_about"
+        android:name="cc.doctor.stars_app.ui.settings.SettingsAboutFragment"
+        android:label="@string/title_settings_about"
+        tools:layout="@layout/fragment_settings_about" />
 
     <fragment
         android:id="@+id/navigation_login"

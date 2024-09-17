@@ -31,12 +31,13 @@
         app:layout_constraintStart_toEndOf="@id/avatar"
         android:textAppearance="?attr/textAppearanceListItem" />
 
-    <Button
+    <cc.doctor.stars_app.ui.view.StatusButton
         android:id="@+id/follow_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:text.yes="@string/btn_follow_cancel"
+        app:text.no="@string/btn_follow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/avatar"
-        app:layout_constraintBottom_toBottomOf="@id/avatar"
-        android:text="关注" />
+        app:layout_constraintBottom_toBottomOf="@id/avatar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
