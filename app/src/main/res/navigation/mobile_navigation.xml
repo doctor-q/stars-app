@@ -16,17 +16,6 @@
         android:name="cc.doctor.stars_app.ui.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/action_navigation_search_result"
-            app:destination="@id/navigation_search_result" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_search_result"
-        android:name="cc.doctor.stars_app.ui.search.result.SearchResultFragment"
-        android:label="@string/title_search"
-        tools:layout="@layout/fragment_search_result" >
-        <argument android:name="keywords" app:argType="string" app:nullable="true"/>
     </fragment>
 
     <fragment
@@ -94,4 +83,12 @@
         android:name="cc.doctor.stars_app.ui.follow.FollowFragment"
         android:label="@string/title_follows"
         tools:layout="@layout/fragment_mine" />
+
+    <fragment
+        android:id="@+id/navigation_author_detail"
+        android:name="cc.doctor.stars_app.ui.author.AuthorFragment"
+        android:label="@string/title_author"
+        tools:layout="@layout/fragment_author" >
+        <argument android:name="authorId" app:argType="integer"/>
+    </fragment>
 </navigation>

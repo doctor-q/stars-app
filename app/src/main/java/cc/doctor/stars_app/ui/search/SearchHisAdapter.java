@@ -1,13 +1,10 @@
 package cc.doctor.stars_app.ui.search;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,15 +53,6 @@ public class SearchHisAdapter extends BaseAdapter {
         SearchHisResponse searchHis = searchHisList.get(position);
         TextView textView = (TextView) view.findViewById(R.id.search_his_text);
         textView.setText(searchHis.getKeywords());
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 搜索结果页
-                Bundle bundle = new Bundle();
-                bundle.putString("keywords", textView.getText().toString());
-                Navigation.findNavController(parent).navigate(R.id.action_navigation_search_result, bundle);
-            }
-        });
         return view;
     }
 }

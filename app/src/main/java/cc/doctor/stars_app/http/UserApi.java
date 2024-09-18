@@ -3,6 +3,7 @@ package cc.doctor.stars_app.http;
 import java.util.List;
 import java.util.Map;
 
+import cc.doctor.stars_app.http.user.AuthorDetailResponse;
 import cc.doctor.stars_app.http.user.AuthorFollowRequest;
 import cc.doctor.stars_app.http.user.AuthorFollowResponse;
 import cc.doctor.stars_app.http.user.FeedbackResponse;
@@ -17,6 +18,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface UserApi {
@@ -46,4 +48,7 @@ public interface UserApi {
 
     @POST("author/follow")
     Call<Response<Integer>> follow(@Body AuthorFollowRequest request, @Header("token") String token);
+
+    @GET("author/detail")
+    Call<Response<AuthorDetailResponse>> getAuthorDetail(@Query("authorId") Integer authorId, @Header("token") String token);
 }

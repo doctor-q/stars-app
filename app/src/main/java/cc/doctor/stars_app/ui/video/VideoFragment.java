@@ -173,6 +173,7 @@ public abstract class VideoFragment implements TabPage {
         }
         RsDetailResponse.AwemeDetail aweme = rsDetail.getAwemeDetail();
         binding.avatar.setUrl(rsDetail.getAuthor().getAvatarUrl());
+        binding.avatar.setAuthorId(rsDetail.getAuthor().getId());
         binding.author.setText(String.format("@%s", rsDetail.getAuthor().getNickname()));
         binding.title.setText(aweme.getAwTitle());
         // 收藏按钮

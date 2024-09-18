@@ -17,4 +17,7 @@ public interface SearchApi {
 
     @GET("search/rs")
     Call<Response<List<RsResponse>>> searchRs(@Query("keywords") String keywords, @Query("size") Integer size, @Header("token") String token);
+
+    @GET("search/suggest")
+    Call<Response<List<String>>> searchSuggest(@Query("keywords") String keywords, @Header("token") String token);
 }

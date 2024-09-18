@@ -11,107 +11,48 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="7"
-        android:completionThreshold="2"
+        android:completionThreshold="1"
         android:text=""
         android:theme="@style/editTextThemeStyle"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/search_button"
+        app:layout_constraintHorizontal_weight="7"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/margin" />
 
     <ImageButton
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="1"
         android:background="@color/background"
         android:src="@android:drawable/ic_menu_search"
-        app:layout_constraintStart_toEndOf="@id/autoCompleteTextView"
         app:layout_constraintEnd_toStartOf="@id/search_label_cloud"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/autoCompleteTextView"
         app:layout_constraintTop_toBottomOf="@id/margin" />
 
     <TextView
         android:id="@+id/search_label_cloud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="2"
         android:layout_marginStart="10dp"
         android:text="标签云"
         android:textColor="@color/text_second"
-        app:layout_constraintStart_toEndOf="@id/search_button"
+        app:layout_constraintBottom_toBottomOf="@id/search_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/search_button"
-        app:layout_constraintBottom_toBottomOf="@id/search_button" />
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@id/search_button"
+        app:layout_constraintTop_toTopOf="@id/search_button" />
 
-    <ListView
-        android:id="@+id/search_his_list"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/search_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/autoCompleteTextView" />
-
-    <TextView
-        android:id="@+id/search_his"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:text="全部搜索历史"
-        android:textColor="@color/text_second"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_his_list" />
-
-    <View
-        android:id="@+id/margin2"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        app:layout_constraintTop_toBottomOf="@id/search_his"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/search_guess"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="猜你想搜"
-        android:textColor="@color/text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/search_others"
-        app:layout_constraintWidth_percent="0.2"
-        app:layout_constraintTop_toBottomOf="@id/margin2" />
-
-    <TextView
-        android:id="@+id/search_others"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="大家在搜"
-        android:textColor="@color/text"
-        app:layout_constraintStart_toEndOf="@id/search_guess"
-        app:layout_constraintWidth_percent="0.2"
-        app:layout_constraintTop_toBottomOf="@id/margin2" />
-
-    <View
-        android:id="@+id/cursor"
-        android:layout_width="0dp"
-        android:layout_height="3dp"
-        android:background="@color/text_second"
-        android:layout_marginTop="@dimen/near_margin"
-        app:layout_constraintWidth_percent="0.2"
-        app:layout_constraintTop_toBottomOf="@id/search_guess"
-        app:layout_constraintStart_toStartOf="@id/search_guess"/>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_page"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cursor"
-        app:layout_constraintStart_toStartOf="parent">
-    </androidx.viewpager.widget.ViewPager>
 </androidx.constraintlayout.widget.ConstraintLayout>

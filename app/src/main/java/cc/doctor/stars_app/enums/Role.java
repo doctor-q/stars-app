@@ -32,4 +32,16 @@ public enum Role {
         }
         return values[position].role;
     }
+
+    public static String getName(Integer role) {
+        if (role == null) {
+            return null;
+        }
+        for (Role value : values()) {
+            if (value.role == role) {
+                return value.name;
+            }
+        }
+        return null;
+    }
 }

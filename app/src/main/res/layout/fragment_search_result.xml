@@ -13,48 +13,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="7"
-        android:completionThreshold="2"
-        android:text=""
-        android:theme="@style/editTextThemeStyle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/search_button"
-        app:layout_constraintTop_toBottomOf="@id/margin" />
-
-    <ImageButton
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="1"
-        android:background="@color/background"
-        android:src="@android:drawable/ic_menu_search"
-        app:layout_constraintStart_toEndOf="@id/autoCompleteTextView"
-        app:layout_constraintEnd_toStartOf="@id/search_label_cloud"
-        app:layout_constraintTop_toBottomOf="@id/margin" />
-
-    <TextView
-        android:id="@+id/search_label_cloud"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="2"
-        android:layout_marginStart="10dp"
-        android:text="标签云"
-        android:textColor="@color/text_second"
-        app:layout_constraintStart_toEndOf="@id/search_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/search_button"
-        app:layout_constraintBottom_toBottomOf="@id/search_button" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        app:layout_constraintTop_toBottomOf="@id/autoCompleteTextView"/>
+        app:layout_constraintTop_toBottomOf="@id/margin"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
